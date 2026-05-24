@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agente GPCS — Especialista em Licitações</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:#0072bc;--azul-escuro:#003087;--azul-claro:#e8f4fc;
+    --verde:#00a651;--verde-escuro:#007a3d;--verde-claro:#e6f5ee;
+    --cinza:#f0f2f4;--cinza-borda:#d0d8e0;
+    --texto:#1a2535;--texto-leve:#5a6a7a;--branco:#ffffff;
+    --radius:8px;--sombra:0 2px 12px rgba(0,114,188,0.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Roboto',sans-serif;background:var(--cinza);color:var(--texto);min-height:100vh;display:flex;flex-direction:column;}
+  .header-top{background:linear-gradient(135deg,#002060 0%,#003087 40%,#0072bc 100%);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:88px;box-shadow:0 3px 16px rgba(0,0,0,0.25);position:relative;}
+  .header-top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#00a651,#00d4ff,#00a651);}
+  .header-logos{display:flex;align-items:center;gap:20px;}
+  .logo-img{height:58px;object-fit:contain;background:white;border-radius:8px;padding:4px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .logo-divider{width:1px;height:50px;background:rgba(255,255,255,0.25);}
+  .header-right{display:flex;align-items:center;gap:20px;}
+  .logo-pref{height:62px;object-fit:contain;background:white;border-radius:6px;padding:4px 10px;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.15));}
+  .status-badge{display:flex;align-items:center;gap:7px;background:rgba(0,166,81,0.2);border:1px solid rgba(0,166,81,0.5);border-radius:20px;padding:6px 14px;font-size:12px;color:#7effc0;font-weight:500;white-space:nowrap;}
+  .status-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .header-strip{background:var(--verde);padding:7px 28px;display:flex;align-items:center;justify-content:space-between;}
+  .header-strip span{font-size:11.5px;color:rgba(255,255,255,0.9);letter-spacing:0.4px;font-weight:500;}
+  .main{flex:1;display:flex;max-width:1060px;width:100%;margin:0 auto;padding:22px 20px;gap:20px;align-items:flex-start;}
+  .sidebar{width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;}
+  .card{background:var(--branco);border-radius:var(--radius);padding:18px;box-shadow:var(--sombra);border:1px solid var(--cinza-borda);}
+  .card-title{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;color:var(--azul-escuro);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--azul-claro);}
+  .card-title .dot{width:8px;height:8px;background:var(--verde);border-radius:50%;flex-shrink:0;}
+  .tag-list{display:flex;flex-direction:column;gap:6px;}
+  .tag{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--texto-leve);line-height:1.3;padding:3px 0;}
+  .tag-bar{width:3px;height:16px;background:var(--azul);border-radius:2px;flex-shrink:0;opacity:0.35;}
+  .suggestion-btn{width:100%;text-align:left;background:var(--cinza);border:1px solid var(--cinza-borda);border-left:3px solid var(--azul);border-radius:6px;padding:9px 12px;font-size:11.5px;color:var(--texto);font-family:'Roboto',sans-serif;cursor:pointer;transition:all 0.2s;line-height:1.4;}
+  .suggestion-btn:hover{background:var(--azul-claro);border-left-color:var(--verde);color:var(--azul-escuro);font-weight:500;}
+  .suggestions{display:flex;flex-direction:column;gap:7px;}
+  .chat-container{flex:1;background:var(--branco);border-radius:var(--radius);box-shadow:var(--sombra);border:1px solid var(--cinza-borda);display:flex;flex-direction:column;height:calc(100vh - 185px);min-height:480px;overflow:hidden;}
+  .chat-header{background:linear-gradient(135deg,#002060,#003087,#0072bc);padding:15px 22px;display:flex;align-items:center;gap:14px;}
+  .chat-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+  .chat-info h2{font-size:15px;font-weight:700;color:var(--branco);}
+  .chat-info p{font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;}
+  .chat-badge{margin-left:auto;background:var(--verde);color:white;font-size:10px;font-weight:700;padding:4px 12px;border-radius:12px;letter-spacing:1px;text-transform:uppercase;}
+  .messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;background:#f5f7fa;}
+  .messages::-webkit-scrollbar{width:4px;}
+  .messages::-webkit-scrollbar-thumb{background:var(--cinza-borda);border-radius:2px;}
+  .msg{display:flex;gap:10px;max-width:88%;animation:fadeUp 0.3s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .msg.user{align-self:flex-end;flex-direction:row-reverse;}
+  .msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.15);overflow:hidden;background:white;}
+  .msg-avatar img{width:24px;height:24px;object-fit:contain;}
+  .msg.user .msg-avatar{background:linear-gradient(135deg,var(--verde),var(--verde-escuro));}
+  .msg.user .msg-avatar img{filter:brightness(0) invert(1);}
+  .msg-bubble{padding:12px 16px;border-radius:var(--radius);font-size:13.5px;line-height:1.7;max-width:100%;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+  .msg.agent .msg-bubble{background:var(--branco);color:var(--texto);border-radius:2px 8px 8px 8px;border-left:3px solid var(--azul);}
+  .msg.user .msg-bubble{background:linear-gradient(135deg,#003087,#0072bc);color:var(--branco);border-radius:8px 2px 8px 8px;}
+  .msg-bubble strong{color:var(--azul-escuro);font-weight:600;}
+  .msg.user .msg-bubble strong{color:#b8deff;}
+  .msg-bubble ul,.msg-bubble ol{padding-left:20px;margin:6px 0;}
+  .msg-bubble li{margin-bottom:4px;}
+  .msg-bubble p{margin-bottom:6px;}
+  .msg-bubble p:last-child{margin-bottom:0;}
+  .msg-bubble code{background:rgba(0,48,135,0.07);padding:1px 5px;border-radius:4px;font-size:12px;color:var(--azul-escuro);}
+  .msg-time{font-size:10px;color:var(--texto-leve);margin-top:4px;}
+  .msg.user .msg-time{text-align:right;}
+  .typing-indicator{display:flex;gap:10px;align-items:center;animation:fadeUp 0.3s ease;}
+  .typing-dots{background:var(--branco);border-left:3px solid var(--azul);border-radius:2px 8px 8px 8px;padding:12px 16px;display:flex;gap:5px;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+  .typing-dots span{width:7px;height:7px;background:var(--azul);border-radius:50%;animation:bounce 1.4s infinite ease-in-out;}
+  .typing-dots span:nth-child(2){animation-delay:0.2s}.typing-dots span:nth-child(3){animation-delay:0.4s}
+  @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+  .input-area{padding:14px 18px;border-top:2px solid var(--cinza-borda);display:flex;gap:10px;align-items:flex-end;background:var(--branco);}
+  #userInput{flex:1;background:var(--cinza);border:1.5px solid var(--cinza-borda);border-radius:8px;padding:11px 16px;font-family:'Roboto',sans-serif;font-size:13.5px;color:var(--texto);resize:none;outline:none;transition:border-color 0.2s;max-height:120px;min-height:44px;line-height:1.5;}
+  #userInput:focus{border-color:var(--azul);background:var(--branco);}
+  #userInput::placeholder{color:#9aabb8;}
+  #sendBtn{width:44px;height:44px;background:var(--azul-escuro);border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+  #sendBtn:hover{background:var(--verde);transform:scale(1.05);}
+  #sendBtn:disabled{background:#b0c4d4;cursor:not-allowed;transform:none;}
+  #sendBtn svg{width:18px;height:18px;fill:white;}
+  .welcome{text-align:center;padding:36px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .welcome-logo{height:64px;object-fit:contain;}
+  .welcome h2{font-family:'Roboto Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--azul-escuro);letter-spacing:0.5px;}
+  .welcome p{font-size:13px;color:var(--texto-leve);max-width:380px;line-height:1.6;}
+  .welcome-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:4px;}
+  .welcome-tag{background:var(--azul-claro);color:var(--azul-escuro);font-size:11px;padding:4px 10px;border-radius:12px;font-weight:500;border:1px solid #c0daf0;}
+  .init-banner{background:var(--azul-claro);border:1px solid var(--azul);border-radius:8px;padding:10px 16px;font-size:12px;color:var(--azul-escuro);text-align:center;margin:12px 20px 0;}
+  footer{background:#002060;color:rgba(255,255,255,0.55);font-size:11px;padding:0;}
+  .footer-top{display:flex;align-items:center;justify-content:space-between;padding:10px 28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:8px;}
+  .footer-sep{opacity:0.3;margin:0 6px;}
+  .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;flex-wrap:wrap;gap:16px;}
+  .footer-pessoas{display:flex;gap:40px;flex-wrap:wrap;}
+  .footer-pessoa{display:flex;flex-direction:column;gap:2px;}
+  .footer-pessoa .cargo{font-size:9px;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.4);}
+  .footer-pessoa .nome{font-size:12px;color:rgba(255,255,255,0.82);font-weight:500;}
+  .footer-direito{font-size:10px;color:rgba(255,255,255,0.3);}
+  @media(max-width:700px){.sidebar{display:none}.main{padding:12px}.chat-container{height:calc(100vh - 155px)}}
+</style>
+</head>
+<body>
+<div class="header-top">
+  <div class="header-logos">
+    <img src="00_DLMS-06_Avatar_Positivo.png" alt="DLMS" class="logo-img">
+    <div class="logo-divider"></div>
+    <img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" class="logo-img">
+  </div>
+  <div class="header-right">
+    <div class="status-badge"><div class="status-dot"></div>Agente Online</div>
+    <img src="1779544450217_image.png" alt="Prefeitura de Londrina" class="logo-pref">
+  </div>
+</div>
+<div class="header-strip">
+  <span>⚖️ &nbsp;Agente Especialista em Licitações Públicas</span>
+  <span>Decreto Municipal 1462/2022 &nbsp;·&nbsp; Lei 14.133/2021</span>
+</div>
+<div class="main">
+  <aside class="sidebar">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Especialidades</div>
+      <div class="tag-list">
+        <div class="tag"><div class="tag-bar"></div>Pesquisa de preços (BPS, PNCP)</div>
+        <div class="tag"><div class="tag-bar"></div>Formação do preço máximo</div>
+        <div class="tag"><div class="tag-bar"></div>Dispensa eletrônica</div>
+        <div class="tag"><div class="tag-bar"></div>Inexigibilidade</div>
+        <div class="tag"><div class="tag-bar"></div>Aditivos contratuais</div>
+        <div class="tag"><div class="tag-bar"></div>Medicamentos e produtos saúde</div>
+        <div class="tag"><div class="tag-bar"></div>Dec. 1462/2022 Londrina</div>
+        <div class="tag"><div class="tag-bar"></div>Lei 14.133/2021</div>
+        <div class="tag"><div class="tag-bar"></div>Sanções administrativas</div>
+        <div class="tag"><div class="tag-bar"></div>Obras e engenharia</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Perguntas frequentes</div>
+      <div class="suggestions">
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como usar o BPS com os filtros obrigatórios?</button>
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como calcular o preço máximo de uma licitação?</button>
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">O que é necessário em uma dispensa eletrônica?</button>
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais documentos exigir para uma inexigibilidade?</button>
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como fazer análise de vantajosidade em aditivo?</button>
+        <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais são as fontes obrigatórias de pesquisa?</button>
+      </div>
+    </div>
+  </aside>
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="chat-avatar"><img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" style="width:48px;height:48px;object-fit:cover;border-radius:50%;"></div>
+      <div class="chat-info">
+        <h2>Agente Especialista em Licitações</h2>
+        <p>GPCS · Prefeitura Municipal de Londrina-PR</p>
+      </div>
+      <div class="chat-badge">IA + RAG</div>
+    </div>
+    <div id="initBanner" class="init-banner">⏳ Carregando base de conhecimento... aguarde alguns segundos.</div>
+    <div class="messages" id="messages">
+      <div class="welcome" id="welcome">
+        <img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" class="welcome-logo">
+        <h2>Bem-vindo ao Agente GPCS</h2>
+        <p>Sou especialista em licitações públicas com base no Decreto Municipal 1462/2022 de Londrina. Consulto automaticamente os documentos cadastrados para responder com precisão.</p>
+        <div class="welcome-tags">
+          <span class="welcome-tag">Dec. 1462/2022</span>
+          <span class="welcome-tag">Lei 14.133/2021</span>
+          <span class="welcome-tag">BPS</span>
+          <span class="welcome-tag">PNCP</span>
+          <span class="welcome-tag">Dispensa</span>
+          <span class="welcome-tag">Aditivos</span>
+        </div>
+      </div>
+    </div>
+    <div class="input-area">
+      <textarea id="userInput" placeholder="Digite sua dúvida sobre licitações..." rows="1" id="userInputArea" disabled></textarea>
+      <button id="sendBtn" onclick="sendMessage()" disabled>
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-top">
+    <span>📊 GPCS — Gerência de Planejamento e Compras em Saúde</span>
+    <span>
+      🏛️ Prefeitura Municipal de Londrina
+      <span class="footer-sep">·</span>
+      Secretaria Municipal de Saúde
+    </span>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-pessoas">
+      <div class="footer-pessoa">
+        <span class="cargo">Diretoria · DLMS</span>
+        <span class="nome">Patrick Fernando da Silva</span>
+      </div>
+      <div class="footer-pessoa">
+        <span class="cargo">Diretoria · DLMS</span>
+        <span class="nome">Lucas Américo Silva</span>
+      </div>
+      <div class="footer-pessoa">
+        <span class="cargo">Gerência · GPCS</span>
+        <span class="nome">Laís Sardi Martins</span>
+      </div>
+    </div>
+    <div class="footer-direito">Powered by Groq AI + Supabase RAG</div>
+  </div>
+</footer>
+
+<script type="module">
+// Configurações
+const GROQ_KEY = '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';
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
+const SUPABASE_URL = 'https://lnmjwmljlukllvsbezbk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_gEpHsceAtC0Pa4Vkf3n1BA_23kwgekr';
+const OPENAI_KEY = null; // não usado — embeddings via pipeline local
+
+const SYSTEM_PROMPT = `Você é um agente especialista em licitações públicas com foco no GPCS (Gerência de Planejamento e Compras em Saúde) da Prefeitura de Londrina-PR.
+
+INSTRUÇÃO CRÍTICA DE IDIOMA: Responda EXCLUSIVAMENTE em português brasileiro. NUNCA use palavras em espanhol, inglês ou qualquer outro idioma.
+
+Você tem domínio completo do DECRETO MUNICIPAL Nº 1462/2022 de Londrina e da Lei 14.133/2021.
+
+Quando trechos de documentos forem fornecidos no contexto, use-os como base principal da resposta e cite a fonte.
+
+ÁREAS DE ESPECIALIDADE:
+1. Pesquisa de preços (BPS, PNCP, cotações)
+2. Formação do preço máximo (mediana, descarte 30%, média aritmética)
+3. Dispensa eletrônica e inexigibilidade
+4. Aditivos contratuais e análise de vantajosidade
+5. Medicamentos e produtos para saúde (BPS obrigatório)
+6. Sanções administrativas
+7. Obras e engenharia (Sinapi/Sicro)
+8. Modalidades licitatórias
+
+Responda sempre de forma clara, objetiva e fundamentada. Cite os artigos do Decreto 1462/2022 e da Lei 14.133/2021 quando relevante.`;
+
+// Elementos
+const messagesEl = document.getElementById('messages');
+const inputEl = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const initBanner = document.getElementById('initBanner');
+let isFirst = true;
+
+// Carregar pipeline de embeddings (Transformers.js)
+
+async function initEmbeddings() {
+  initBanner.textContent = '✅ Base de conhecimento conectada! Pode fazer sua pergunta.';
+  setTimeout(() => initBanner.style.display = 'none', 2000);
+  inputEl.disabled = false;
+  sendBtn.disabled = false;
+  inputEl.focus();
+}
+
+async function buscarDocumentos(query) {
+  try {
+    const stopwords = ['como','qual','quais','o','a','os','as','de','da','do','em','para','por','com','que','se','um','uma','uns','umas','ao','aos','é','são','foi','ser','ter','tem','não','mas','ou','e','na','no','nas','nos'];
+    const palavras = query.toLowerCase()
+      .replace(/[^\w\sãõâêîôûáéíóúàèìòùç]/g, '')
+      .split(/\s+/)
+      .filter(p => p.length > 3 && !stopwords.includes(p));
+
+    if (palavras.length === 0) return '';
+
+    const filtros = palavras.slice(0, 3).map(p => `conteudo.ilike.*${p}*`).join(',');
+    const url = `${SUPABASE_URL}/rest/v1/documentos?or=(${filtros})&select=conteudo,nome_arquivo&limit=5`;
+
+    const res = await fetch(url, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+
+    if (!res.ok) return '';
+    const docs = await res.json();
+    if (!docs || docs.length === 0) return '';
+
+    return docs
+      .map(d => `[Fonte: ${d.nome_arquivo || 'Documento'}]\n${d.conteudo}`)
+      .join('\n\n---\n\n');
+  } catch(e) {
+    return '';
+  }
+}
+// Funções de UI
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+function getTime() { return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+
+function mdToHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/`(.*?)`/g,'<code>$1</code>').replace(/^#{1,3} (.+)$/gm,'<strong>$1</strong>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>').replace(/^(\d+)\. (.+)$/gm,'<li>$2</li>')
+    .replace(/(<li>.*?<\/li>(\n|$))+/gs, m => '<ul>' + m + '</ul>')
+    .replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>');
+}
+
+function addMessage(text, role) {
+  if (isFirst) { document.getElementById('welcome')?.remove(); isFirst = false; }
+  const msg = document.createElement('div'); msg.className = `msg ${role}`;
+  const av = document.createElement('div'); av.className = 'msg-avatar';
+  av.innerHTML = `<img src="01_GPCS-06_Avatar_Positivo.png" alt="">`;
+  if (role === 'user') av.innerHTML = `<img src="01_GPCS-06_Avatar_Positivo.png" alt="" style="filter:brightness(0) invert(1);">`;
+  const wrap = document.createElement('div');
+  const bubble = document.createElement('div'); bubble.className = 'msg-bubble';
+  bubble.innerHTML = role === 'agent' ? '<p>' + mdToHtml(text) + '</p>' : text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const time = document.createElement('div'); time.className = 'msg-time'; time.textContent = getTime();
+  wrap.appendChild(bubble); wrap.appendChild(time);
+  msg.appendChild(av); msg.appendChild(wrap);
+  messagesEl.appendChild(msg);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showTyping() {
+  const el = document.createElement('div'); el.className = 'typing-indicator'; el.id = 'typing';
+  el.innerHTML = `<div class="msg-avatar"><img src="01_GPCS-06_Avatar_Positivo.png" alt=""></div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+  messagesEl.appendChild(el); messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+function hideTyping() { document.getElementById('typing')?.remove(); }
+
+let history = [];
+
+async function sendMessage(text) {
+  const msg = text || inputEl.value.trim();
+  if (!msg || sendBtn.disabled) return;
+  inputEl.value = ''; inputEl.style.height = 'auto';
+  sendBtn.disabled = true;
+  addMessage(msg, 'user');
+  showTyping();
+
+  // Buscar contexto no Supabase
+  const contexto = await buscarDocumentos(msg);
+  const userMsg = contexto
+    ? `Contexto dos documentos:\n${contexto}\n\nPergunta do usuário: ${msg}`
+    : msg;
+
+  history.push({ role: 'user', content: userMsg });
+  if (history.length > 20) history = history.slice(-20);
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        max_tokens: 2048,
+        temperature: 0.2,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history]
+      })
+    });
+    const data = await res.json();
+    hideTyping();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.choices?.[0]?.message?.content || 'Não foi possível obter resposta.';
+    history.push({ role: 'assistant', content: reply });
+    addMessage(reply, 'agent');
+  } catch(e) {
+    hideTyping();
+    addMessage('Erro ao conectar. Tente novamente.', 'agent');
+  }
+  sendBtn.disabled = false;
+  inputEl.focus();
+}
+
+function sendSuggestion(btn) { sendMessage(btn.textContent); }
+window.sendSuggestion = sendSuggestion;
+window.sendMessage = sendMessage;
+
+// Event listeners
+inputEl.addEventListener('keydown', handleKey);
+inputEl.addEventListener('input', () => autoResize(inputEl));
+
+// Inicializar
+initEmbeddings();
+</script>
+</body>
+</html>
