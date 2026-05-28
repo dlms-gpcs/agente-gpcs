@@ -206,7 +206,7 @@
 
 <script type="module">
 // Configurações
-const GROQ_KEY = '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';
+const PROXY_URL = 'https://gpcs-agent.americo-lucas.workers.dev';
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 const SUPABASE_URL = 'https://lnmjwmljlukllvsbezbk.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gEpHsceAtC0Pa4Vkf3n1BA_23kwgekr';
@@ -337,9 +337,9 @@ async function sendMessage(text) {
   if (history.length > 20) history = history.slice(-20);
 
   try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const res = await fetch(PROXY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: GROQ_MODEL,
         max_tokens: 2048,
