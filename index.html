@@ -383,7 +383,7 @@ inputEl.addEventListener('input', () => autoResize(inputEl));
 // Carregar lista de documentos
 async function carregarDocumentos() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/documentos?select=nome_arquivo&limit=100`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/documentos?select=nome_arquivo,metadata&limit=500`, {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -391,13 +391,25 @@ async function carregarDocumentos() {
     });
     const docs = await res.json();
     if (!docs || docs.length === 0) {
-      document.getElementById('docList').innerHTML = '<div class="tag"><div class="tag-bar"></div><em style="font-size:11px;color:#aaa;">Nenhum documento</em></div>';
+      document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Nenhum documento</em></div>';
       return;
     }
-    // Pegar nomes únicos
-    const nomes = [...new Set(docs.map(d => d.nome_arquivo).filter(Boolean))];
+    // Pegar nomes únicos — tenta nome_arquivo, depois metadata.source, depois metadata
+    const nomes = [...new Set(docs.map(d => {
+      if (d.nome_arquivo) return d.nome_arquivo;
+      if (d.metadata && d.metadata.source) return d.metadata.source;
+      if (d.metadata && typeof d.metadata === 'string') {
+        try { const m = JSON.parse(d.metadata); return m.source || m.nome || null; } catch(e) {}
+      }
+      return null;
+    }).filter(Boolean))];
+    
+    if (nomes.length === 0) {
+      document.getElementById('docList').innerHTML = `<div class="tag"><em style="font-size:11px;color:#aaa;">${docs.length} chunks carregados</em></div>`;
+      return;
+    }
     document.getElementById('docList').innerHTML = nomes.map(nome => 
-      `<div class="tag"><div class="tag-bar" style="background:var(--verde);opacity:0.7;"></div><span style="font-size:11.5px;">${nome}</span></div>`
+      `<div class="tag"><div class="tag-bar" style="background:var(--verde);opacity:0.7;flex-shrink:0;"></div><span style="font-size:11.5px;">${nome}</span></div>`
     ).join('');
   } catch(e) {
     document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Erro ao carregar</em></div>';
