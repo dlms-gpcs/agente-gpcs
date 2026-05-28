@@ -219,8 +219,6 @@
 // Configurações
 const PROXY_URL = 'https://gpcs-agent.americo-lucas.workers.dev';
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
-const SUPABASE_URL = 'https://lnmjwmljlukllvsbezbk.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxubWp3bWxqbHVrbGx2c2JlemJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MTI2MTMsImV4cCI6MjA5NTA4ODYxM30.KjZI0IYpwwKhXMrUdQBlmtSTpeeyXnUx3oIxQO9cD7o';
 const OPENAI_KEY = null; // não usado — embeddings via pipeline local
 
 const SYSTEM_PROMPT = `Você é um agente especialista em licitações públicas com foco no GPCS (Gerência de Planejamento e Compras em Saúde) da Prefeitura de Londrina-PR.
@@ -270,14 +268,10 @@ async function buscarDocumentos(query) {
 
     if (palavras.length === 0) return '';
 
-    const filtros = palavras.slice(0, 3).map(p => `conteudo.ilike.*${p}*`).join(',');
-    const url = `${SUPABASE_URL}/rest/v1/documentos?or=(${filtros})&select=conteudo,nome_arquivo&limit=5`;
-
-    const res = await fetch(url, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
+    const res = await fetch(`${PROXY_URL}/buscar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ palavras: palavras.slice(0, 3) })
     });
 
     if (!res.ok) return '';
@@ -383,12 +377,7 @@ inputEl.addEventListener('input', () => autoResize(inputEl));
 // Carregar lista de documentos
 async function carregarDocumentos() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/documentos?select=nome_arquivo,metadata&limit=500`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
+    const res = await fetch(`${PROXY_URL}/documentos`);
     const docs = await res.json();
     if (!docs || docs.length === 0) {
       document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Nenhum documento</em></div>';
