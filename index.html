@@ -229,7 +229,7 @@ var SYSTEM_PROMPT = 'Você é um agente especialista em licitações públicas c
 // ============================================================
 // ESTADO
 // ============================================================
-var history = [];
+var chatHistory = [];
 var isFirst = true;
 
 // ============================================================
@@ -379,8 +379,8 @@ function sendMessage(text) {
       ? 'Contexto dos documentos:\n' + contexto + '\n\nPergunta do usuário: ' + msg
       : msg;
 
-    history.push({ role: 'user', content: userMsg });
-    if (history.length > 20) history = history.slice(-20);
+    chatHistory.push({ role: 'user', content: userMsg });
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
 
     return fetch(PROXY_URL, {
       method: 'POST',
@@ -389,7 +389,7 @@ function sendMessage(text) {
         model: GROQ_MODEL,
         max_tokens: 2048,
         temperature: 0.2,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history)
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(chatHistory)
       })
     });
   })
@@ -400,7 +400,7 @@ function sendMessage(text) {
     var reply = (data.choices && data.choices[0] && data.choices[0].message)
       ? data.choices[0].message.content
       : 'Não foi possível obter resposta.';
-    history.push({ role: 'assistant', content: reply });
+    chatHistory.push({ role: 'assistant', content: reply });
     addMessage(reply, 'agent');
   })
   .catch(function(e){
