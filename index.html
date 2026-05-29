@@ -352,7 +352,10 @@ function buscarDocumentos(query) {
   .then(function(docs){
     if (!docs || !docs.length) return '';
     return docs
-      .map(function(d){ return '[Fonte: ' + (d.nome_arquivo || 'Documento') + ']\n' + d.conteudo; })
+      .map(function(d){
+        var texto = d.conteudo ? d.conteudo.substring(0, 1500) : '';
+        return '[Fonte: ' + (d.nome_arquivo || 'Documento') + ']\n' + texto;
+      })
       .join('\n\n---\n\n');
   })
   .catch(function(){ return ''; });
