@@ -100,6 +100,7 @@
 </style>
 </head>
 <body>
+
 <div class="header-top">
   <div class="header-logos">
     <img src="00_DLMS-06_Avatar_Positivo.png" alt="DLMS" class="logo-img">
@@ -111,59 +112,64 @@
     <img src="1779544450217_image.png" alt="Prefeitura de Londrina" class="logo-pref">
   </div>
 </div>
+
 <div class="header-strip">
-  <span>⚖️ &nbsp;Agente Especialista em Licitações Públicas</span>
+  <span>&#x2696;&#xFE0F; &nbsp;Agente Especialista em Licitações Públicas</span>
   <span>Decreto Municipal 1462/2022 &nbsp;·&nbsp; Lei 14.133/2021</span>
 </div>
+
 <div class="main">
   <aside class="sidebar">
     <div class="sidebar-col">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Especialidades</div>
-      <div class="tag-list">
-        <div class="tag"><div class="tag-bar"></div>Pesquisa de preços (BPS, PNCP)</div>
-        <div class="tag"><div class="tag-bar"></div>Formação do preço máximo</div>
-        <div class="tag"><div class="tag-bar"></div>Dispensa eletrônica</div>
-        <div class="tag"><div class="tag-bar"></div>Inexigibilidade</div>
-        <div class="tag"><div class="tag-bar"></div>Aditivos contratuais</div>
-        <div class="tag"><div class="tag-bar"></div>Medicamentos e produtos saúde</div>
-        <div class="tag"><div class="tag-bar"></div>Dec. 1462/2022 Londrina</div>
-        <div class="tag"><div class="tag-bar"></div>Lei 14.133/2021</div>
-        <div class="tag"><div class="tag-bar"></div>Sanções administrativas</div>
-        <div class="tag"><div class="tag-bar"></div>Obras e engenharia</div>
+      <div class="card">
+        <div class="card-title"><div class="dot"></div>Especialidades</div>
+        <div class="tag-list">
+          <div class="tag"><div class="tag-bar"></div>Pesquisa de preços (BPS, PNCP)</div>
+          <div class="tag"><div class="tag-bar"></div>Formação do preço máximo</div>
+          <div class="tag"><div class="tag-bar"></div>Dispensa eletrônica</div>
+          <div class="tag"><div class="tag-bar"></div>Inexigibilidade</div>
+          <div class="tag"><div class="tag-bar"></div>Aditivos contratuais</div>
+          <div class="tag"><div class="tag-bar"></div>Medicamentos e produtos saúde</div>
+          <div class="tag"><div class="tag-bar"></div>Dec. 1462/2022 Londrina</div>
+          <div class="tag"><div class="tag-bar"></div>Lei 14.133/2021</div>
+          <div class="tag"><div class="tag-bar"></div>Sanções administrativas</div>
+          <div class="tag"><div class="tag-bar"></div>Obras e engenharia</div>
+        </div>
       </div>
     </div>
-    </div><!-- fim sidebar-col 1 -->
     <div class="sidebar-col">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Base de Documentos</div>
-      <div id="docList" class="tag-list">
-        <div class="tag"><div class="tag-bar"></div><em style="font-size:11px;color:#aaa;">Carregando...</em></div>
+      <div class="card">
+        <div class="card-title"><div class="dot"></div>Base de Documentos</div>
+        <div id="docList" class="tag-list">
+          <div class="tag"><div class="tag-bar"></div><em style="font-size:11px;color:#aaa;">Carregando...</em></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="dot"></div>Perguntas frequentes</div>
+        <div class="suggestions">
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">Como usar o BPS com os filtros obrigatórios?</button>
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">Como calcular o preço máximo de uma licitação?</button>
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">O que é necessário em uma dispensa eletrônica?</button>
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais documentos exigir para uma inexigibilidade?</button>
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">Como fazer análise de vantajosidade em aditivo?</button>
+          <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais são as fontes obrigatórias de pesquisa?</button>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Perguntas frequentes</div>
-      <div class="suggestions">
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como usar o BPS com os filtros obrigatórios?</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como calcular o preço máximo de uma licitação?</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">O que é necessário em uma dispensa eletrônica?</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais documentos exigir para uma inexigibilidade?</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">Como fazer análise de vantajosidade em aditivo?</button>
-        <button class="suggestion-btn" onclick="sendSuggestion(this)">Quais são as fontes obrigatórias de pesquisa?</button>
-      </div>
-    </div>
-    </div><!-- fim sidebar-col 2 -->
   </aside>
+
   <div class="chat-container">
     <div class="chat-header">
-      <div class="chat-avatar"><img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" style="width:48px;height:48px;object-fit:cover;border-radius:50%;"></div>
+      <div class="chat-avatar">
+        <img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" style="width:48px;height:48px;object-fit:cover;border-radius:50%;">
+      </div>
       <div class="chat-info">
         <h2>Agente Especialista em Licitações</h2>
         <p>GPCS · Prefeitura Municipal de Londrina-PR</p>
       </div>
       <div class="chat-badge">IA + RAG</div>
     </div>
-    <div id="initBanner" class="init-banner">⏳ Carregando base de conhecimento... aguarde alguns segundos.</div>
+    <div id="initBanner" class="init-banner">&#x23F3; Carregando base de conhecimento... aguarde.</div>
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
         <img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" class="welcome-logo">
@@ -180,21 +186,18 @@
       </div>
     </div>
     <div class="input-area">
-      <textarea id="userInput" placeholder="Digite sua dúvida sobre licitações..." rows="1" id="userInputArea" disabled></textarea>
-      <button id="sendBtn" onclick="sendMessage()" disabled>
+      <textarea id="userInput" placeholder="Digite sua dúvida sobre licitações..." rows="1"></textarea>
+      <button id="sendBtn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
   </div>
 </div>
+
 <footer>
   <div class="footer-top">
-    <span>📊 GPCS — Gerência de Planejamento e Compras em Saúde</span>
-    <span>
-      🏛️ Prefeitura Municipal de Londrina
-      <span class="footer-sep">·</span>
-      Secretaria Municipal de Saúde
-    </span>
+    <span>&#x1F4CA; GPCS — Gerência de Planejamento e Compras em Saúde</span>
+    <span>&#x1F3DB;&#xFE0F; Prefeitura Municipal de Londrina <span class="footer-sep">·</span> Secretaria Municipal de Saúde</span>
   </div>
   <div class="footer-bottom">
     <div class="footer-pessoas">
@@ -215,199 +218,239 @@
   </div>
 </footer>
 
-<script type="module">
-// Configurações
-const PROXY_URL = 'https://gpcs-agent.americo-lucas.workers.dev';
-const GROQ_MODEL = 'llama-3.3-70b-versatile';
-const OPENAI_KEY = null; // não usado — embeddings via pipeline local
+<script>
+// ============================================================
+// CONFIGURAÇÕES — variáveis globais (sem type="module")
+// ============================================================
+var PROXY_URL  = 'https://gpcs-agent.americo-lucas.workers.dev';
+var GROQ_MODEL = 'llama-3.3-70b-versatile';
+var SYSTEM_PROMPT = 'Você é um agente especialista em licitações públicas com foco no GPCS (Gerência de Planejamento e Compras em Saúde) da Prefeitura de Londrina-PR.\n\nINSTRUÇÃO CRÍTICA DE IDIOMA: Responda EXCLUSIVAMENTE em português brasileiro. NUNCA use palavras em espanhol, inglês ou qualquer outro idioma.\n\nVocê tem domínio completo do DECRETO MUNICIPAL Nº 1462/2022 de Londrina e da Lei 14.133/2021.\n\nQuando trechos de documentos forem fornecidos no contexto, use-os como base principal da resposta e cite a fonte.\n\nÁREAS DE ESPECIALIDADE:\n1. Pesquisa de preços (BPS, PNCP, cotações)\n2. Formação do preço máximo (mediana, descarte 30%, média aritmética)\n3. Dispensa eletrônica e inexigibilidade\n4. Aditivos contratuais e análise de vantajosidade\n5. Medicamentos e produtos para saúde (BPS obrigatório)\n6. Sanções administrativas\n7. Obras e engenharia (Sinapi/Sicro)\n8. Modalidades licitatórias\n\nResponda sempre de forma clara, objetiva e fundamentada. Cite os artigos do Decreto 1462/2022 e da Lei 14.133/2021 quando relevante.';
 
-const SYSTEM_PROMPT = `Você é um agente especialista em licitações públicas com foco no GPCS (Gerência de Planejamento e Compras em Saúde) da Prefeitura de Londrina-PR.
+// ============================================================
+// ESTADO
+// ============================================================
+var history = [];
+var isFirst = true;
 
-INSTRUÇÃO CRÍTICA DE IDIOMA: Responda EXCLUSIVAMENTE em português brasileiro. NUNCA use palavras em espanhol, inglês ou qualquer outro idioma.
+// ============================================================
+// INICIALIZAÇÃO — aguarda DOM pronto
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+  var inputEl   = document.getElementById('userInput');
+  var initBanner = document.getElementById('initBanner');
 
-Você tem domínio completo do DECRETO MUNICIPAL Nº 1462/2022 de Londrina e da Lei 14.133/2021.
+  inputEl.addEventListener('keydown', handleKey);
+  inputEl.addEventListener('input', function () { autoResize(inputEl); });
 
-Quando trechos de documentos forem fornecidos no contexto, use-os como base principal da resposta e cite a fonte.
-
-ÁREAS DE ESPECIALIDADE:
-1. Pesquisa de preços (BPS, PNCP, cotações)
-2. Formação do preço máximo (mediana, descarte 30%, média aritmética)
-3. Dispensa eletrônica e inexigibilidade
-4. Aditivos contratuais e análise de vantajosidade
-5. Medicamentos e produtos para saúde (BPS obrigatório)
-6. Sanções administrativas
-7. Obras e engenharia (Sinapi/Sicro)
-8. Modalidades licitatórias
-
-Responda sempre de forma clara, objetiva e fundamentada. Cite os artigos do Decreto 1462/2022 e da Lei 14.133/2021 quando relevante.`;
-
-// Elementos
-const messagesEl = document.getElementById('messages');
-const inputEl = document.getElementById('userInput');
-const sendBtn = document.getElementById('sendBtn');
-const initBanner = document.getElementById('initBanner');
-let isFirst = true;
-
-// Carregar pipeline de embeddings (Transformers.js)
-
-async function initEmbeddings() {
   initBanner.textContent = '✅ Base de conhecimento conectada! Pode fazer sua pergunta.';
-  setTimeout(() => initBanner.style.display = 'none', 2000);
-  inputEl.disabled = false;
-  sendBtn.disabled = false;
-  inputEl.focus();
+  setTimeout(function () { initBanner.style.display = 'none'; }, 2500);
+
+  carregarDocumentos();
+});
+
+// ============================================================
+// HELPERS DE UI
+// ============================================================
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
 }
 
-async function buscarDocumentos(query) {
-  try {
-    const stopwords = ['como','qual','quais','o','a','os','as','de','da','do','em','para','por','com','que','se','um','uma','uns','umas','ao','aos','é','são','foi','ser','ter','tem','não','mas','ou','e','na','no','nas','nos'];
-    const palavras = query.toLowerCase()
-      .replace(/[^\w\sãõâêîôûáéíóúàèìòùç]/g, '')
-      .split(/\s+/)
-      .filter(p => p.length > 3 && !stopwords.includes(p));
-
-    if (palavras.length === 0) return '';
-
-    const res = await fetch(`${PROXY_URL}/buscar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ palavras: palavras.slice(0, 3) })
-    });
-
-    if (!res.ok) return '';
-    const docs = await res.json();
-    if (!docs || docs.length === 0) return '';
-
-    return docs
-      .map(d => `[Fonte: ${d.nome_arquivo || 'Documento'}]\n${d.conteudo}`)
-      .join('\n\n---\n\n');
-  } catch(e) {
-    return '';
-  }
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
-// Funções de UI
-function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
-function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
-function getTime() { return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+
+function getTime() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
 
 function mdToHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')
-    .replace(/`(.*?)`/g,'<code>$1</code>').replace(/^#{1,3} (.+)$/gm,'<strong>$1</strong>')
-    .replace(/^- (.+)$/gm,'<li>$1</li>').replace(/^(\d+)\. (.+)$/gm,'<li>$2</li>')
-    .replace(/(<li>.*?<\/li>(\n|$))+/gs, m => '<ul>' + m + '</ul>')
-    .replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>');
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/`(.*?)`/g,'<code>$1</code>')
+    .replace(/^#{1,3} (.+)$/gm,'<strong>$1</strong>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm,'<li>$2</li>')
+    .replace(/(<li>.*?<\/li>\n?)+/g, function(m){ return '<ul>'+m+'</ul>'; })
+    .replace(/\n{2,}/g,'</p><p>')
+    .replace(/\n/g,'<br>');
 }
 
 function addMessage(text, role) {
-  if (isFirst) { document.getElementById('welcome')?.remove(); isFirst = false; }
-  const msg = document.createElement('div'); msg.className = `msg ${role}`;
-  const av = document.createElement('div'); av.className = 'msg-avatar';
-  av.innerHTML = `<img src="01_GPCS-06_Avatar_Positivo.png" alt="">`;
-  if (role === 'user') av.innerHTML = `<img src="01_GPCS-06_Avatar_Positivo.png" alt="" style="filter:brightness(0) invert(1);">`;
-  const wrap = document.createElement('div');
-  const bubble = document.createElement('div'); bubble.className = 'msg-bubble';
-  bubble.innerHTML = role === 'agent' ? '<p>' + mdToHtml(text) + '</p>' : text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const time = document.createElement('div'); time.className = 'msg-time'; time.textContent = getTime();
-  wrap.appendChild(bubble); wrap.appendChild(time);
-  msg.appendChild(av); msg.appendChild(wrap);
+  if (isFirst) {
+    var w = document.getElementById('welcome');
+    if (w) w.remove();
+    isFirst = false;
+  }
+  var messagesEl = document.getElementById('messages');
+  var msg = document.createElement('div');
+  msg.className = 'msg ' + role;
+
+  var av = document.createElement('div');
+  av.className = 'msg-avatar';
+  av.innerHTML = role === 'user'
+    ? '<img src="01_GPCS-06_Avatar_Positivo.png" alt="" style="filter:brightness(0) invert(1);">'
+    : '<img src="01_GPCS-06_Avatar_Positivo.png" alt="">';
+
+  var wrap  = document.createElement('div');
+  var bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  if (role === 'agent') {
+    bubble.innerHTML = '<p>' + mdToHtml(text) + '</p>';
+  } else {
+    bubble.textContent = text;
+  }
+
+  var time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = getTime();
+
+  wrap.appendChild(bubble);
+  wrap.appendChild(time);
+  msg.appendChild(av);
+  msg.appendChild(wrap);
   messagesEl.appendChild(msg);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
 function showTyping() {
-  const el = document.createElement('div'); el.className = 'typing-indicator'; el.id = 'typing';
-  el.innerHTML = `<div class="msg-avatar"><img src="01_GPCS-06_Avatar_Positivo.png" alt=""></div><div class="typing-dots"><span></span><span></span><span></span></div>`;
-  messagesEl.appendChild(el); messagesEl.scrollTop = messagesEl.scrollHeight;
+  var messagesEl = document.getElementById('messages');
+  var el = document.createElement('div');
+  el.className = 'typing-indicator';
+  el.id = 'typing';
+  el.innerHTML = '<div class="msg-avatar"><img src="01_GPCS-06_Avatar_Positivo.png" alt=""></div>'
+               + '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  messagesEl.appendChild(el);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
 }
-function hideTyping() { document.getElementById('typing')?.remove(); }
 
-let history = [];
+function hideTyping() {
+  var el = document.getElementById('typing');
+  if (el) el.remove();
+}
 
-async function sendMessage(text) {
-  const msg = text || inputEl.value.trim();
+// ============================================================
+// RAG — busca palavras-chave no Supabase via Worker
+// ============================================================
+function buscarDocumentos(query) {
+  var stopwords = ['como','qual','quais','o','a','os','as','de','da','do','em','para','por','com','que','se','um','uma','uns','umas','ao','aos','é','são','foi','ser','ter','tem','não','mas','ou','e','na','no','nas','nos'];
+  var palavras = query.toLowerCase()
+    .replace(/[^\w\sãõâêîôûáéíóúàèìòùç]/g, '')
+    .split(/\s+/)
+    .filter(function(p){ return p.length > 3 && stopwords.indexOf(p) === -1; });
+
+  if (palavras.length === 0) return Promise.resolve('');
+
+  return fetch(PROXY_URL + '/buscar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ palavras: palavras.slice(0, 3) })
+  })
+  .then(function(res){ return res.ok ? res.json() : []; })
+  .then(function(docs){
+    if (!docs || !docs.length) return '';
+    return docs
+      .map(function(d){ return '[Fonte: ' + (d.nome_arquivo || 'Documento') + ']\n' + d.conteudo; })
+      .join('\n\n---\n\n');
+  })
+  .catch(function(){ return ''; });
+}
+
+// ============================================================
+// ENVIO DE MENSAGEM — função global (chamada pelo onclick)
+// ============================================================
+function sendMessage(text) {
+  var inputEl  = document.getElementById('userInput');
+  var sendBtn  = document.getElementById('sendBtn');
+  var msg = (typeof text === 'string' && text) ? text : inputEl.value.trim();
   if (!msg || sendBtn.disabled) return;
-  inputEl.value = ''; inputEl.style.height = 'auto';
+
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
   sendBtn.disabled = true;
+
   addMessage(msg, 'user');
   showTyping();
 
-  // Buscar contexto no Supabase
-  const contexto = await buscarDocumentos(msg);
-  const userMsg = contexto
-    ? `Contexto dos documentos:\n${contexto}\n\nPergunta do usuário: ${msg}`
-    : msg;
+  buscarDocumentos(msg).then(function(contexto){
+    var userMsg = contexto
+      ? 'Contexto dos documentos:\n' + contexto + '\n\nPergunta do usuário: ' + msg
+      : msg;
 
-  history.push({ role: 'user', content: userMsg });
-  if (history.length > 20) history = history.slice(-20);
+    history.push({ role: 'user', content: userMsg });
+    if (history.length > 20) history = history.slice(-20);
 
-  try {
-    const res = await fetch(PROXY_URL, {
+    return fetch(PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: GROQ_MODEL,
         max_tokens: 2048,
         temperature: 0.2,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history]
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history)
       })
     });
-    const data = await res.json();
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
     hideTyping();
     if (data.error) throw new Error(data.error.message);
-    const reply = data.choices?.[0]?.message?.content || 'Não foi possível obter resposta.';
+    var reply = (data.choices && data.choices[0] && data.choices[0].message)
+      ? data.choices[0].message.content
+      : 'Não foi possível obter resposta.';
     history.push({ role: 'assistant', content: reply });
     addMessage(reply, 'agent');
-  } catch(e) {
+  })
+  .catch(function(e){
     hideTyping();
     addMessage('Erro ao conectar. Tente novamente.', 'agent');
-  }
-  sendBtn.disabled = false;
-  inputEl.focus();
+    console.error('Erro sendMessage:', e);
+  })
+  .finally(function(){
+    sendBtn.disabled = false;
+    document.getElementById('userInput').focus();
+  });
 }
 
-function sendSuggestion(btn) { sendMessage(btn.textContent); }
-window.sendSuggestion = sendSuggestion;
-window.sendMessage = sendMessage;
+// ============================================================
+// SUGESTÕES — função global (chamada pelo onclick)
+// ============================================================
+function sendSuggestion(btn) {
+  sendMessage(btn.textContent.trim());
+}
 
-// Event listeners
-inputEl.addEventListener('keydown', handleKey);
-inputEl.addEventListener('input', () => autoResize(inputEl));
-
-// Carregar lista de documentos
-async function carregarDocumentos() {
-  try {
-    const res = await fetch(`${PROXY_URL}/documentos`);
-    const docs = await res.json();
-    if (!docs || docs.length === 0) {
-      document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Nenhum documento</em></div>';
-      return;
-    }
-    // Pegar nomes únicos — tenta nome_arquivo, depois metadata.source, depois metadata
-    const nomes = [...new Set(docs.map(d => {
-      if (d.nome_arquivo) return d.nome_arquivo;
-      if (d.metadata && d.metadata.source) return d.metadata.source;
-      if (d.metadata && typeof d.metadata === 'string') {
-        try { const m = JSON.parse(d.metadata); return m.source || m.nome || null; } catch(e) {}
+// ============================================================
+// CARREGAR LISTA DE DOCUMENTOS NA SIDEBAR
+// ============================================================
+function carregarDocumentos() {
+  fetch(PROXY_URL + '/documentos')
+    .then(function(res){ return res.json(); })
+    .then(function(docs){
+      var docList = document.getElementById('docList');
+      if (!docs || !docs.length) {
+        docList.innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Nenhum documento</em></div>';
+        return;
       }
-      return null;
-    }).filter(Boolean))];
-    
-    if (nomes.length === 0) {
-      document.getElementById('docList').innerHTML = `<div class="tag"><em style="font-size:11px;color:#aaa;">${docs.length} chunks carregados</em></div>`;
-      return;
-    }
-    document.getElementById('docList').innerHTML = nomes.map(nome => 
-      `<div class="tag"><div class="tag-bar" style="background:var(--verde);opacity:0.7;flex-shrink:0;"></div><span style="font-size:11.5px;">${nome}</span></div>`
-    ).join('');
-  } catch(e) {
-    document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Erro ao carregar</em></div>';
-  }
+      var nomes = [];
+      docs.forEach(function(d){
+        var nome = d.nome_arquivo || (d.metadata && d.metadata.source) || null;
+        if (nome && nomes.indexOf(nome) === -1) nomes.push(nome);
+      });
+      if (!nomes.length) {
+        docList.innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">' + docs.length + ' documentos carregados</em></div>';
+        return;
+      }
+      docList.innerHTML = nomes.map(function(nome){
+        return '<div class="tag"><div class="tag-bar" style="background:var(--verde);opacity:0.7;flex-shrink:0;"></div>'
+             + '<span style="font-size:11.5px;">' + nome + '</span></div>';
+      }).join('');
+    })
+    .catch(function(){
+      document.getElementById('docList').innerHTML = '<div class="tag"><em style="font-size:11px;color:#aaa;">Erro ao carregar</em></div>';
+    });
 }
-
-// Inicializar
-initEmbeddings();
-carregarDocumentos();
 </script>
 </body>
 </html>
