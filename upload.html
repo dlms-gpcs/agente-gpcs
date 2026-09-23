@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload de Documentos — GPCS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  :root{
+    --azul-escuro:#002060; --azul:#003087; --azul-claro:#0072bc;
+    --verde:#00a651; --cinza:#f4f6f9; --borda:#dfe4ec; --texto:#1c2430;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--cinza); color:var(--texto); min-height:100vh;
+  }
+  header{
+    background:linear-gradient(135deg,var(--azul-escuro),var(--azul-claro));
+    padding:14px 20px; display:flex; align-items:center; gap:14px;
+  }
+  header img{height:46px;width:auto;background:#fff;border-radius:8px;padding:4px}
+  header .t{color:#fff;font-size:15px;font-weight:600;letter-spacing:.2px}
+  header .s{color:#cfe3f5;font-size:12px}
+  .faixa{
+    background:var(--verde); color:#fff; padding:7px 20px;
+    font-size:12.5px; font-weight:600; letter-spacing:.3px;
+  }
+  main{max-width:640px;margin:32px auto;padding:0 16px}
+  .card{
+    background:#fff;border:1px solid var(--borda);border-radius:10px;
+    padding:26px; box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  h1{font-size:19px;color:var(--azul-escuro);margin-bottom:6px}
+  .sub{font-size:13.5px;color:#5a6676;margin-bottom:22px;line-height:1.5}
+  label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#33404f}
+  input[type=text]{
+    width:100%;padding:11px 12px;border:1px solid var(--borda);
+    border-radius:7px;font-size:14px;font-family:inherit;
+  }
+  input[type=text]:focus{outline:none;border-color:var(--azul-claro);box-shadow:0 0 0 3px rgba(0,114,188,.12)}
+  .drop{
+    border:2px dashed #c3cede;border-radius:8px;padding:26px;text-align:center;
+    cursor:pointer;transition:.15s;background:#fafbfd;margin-bottom:20px;
+  }
+  .drop:hover,.drop.over{border-color:var(--azul-claro);background:#f0f7fd}
+  .drop .ic{font-size:26px;color:var(--azul-claro);margin-bottom:6px}
+  .drop .txt{font-size:13.5px;color:#5a6676}
+  .drop .nome{font-size:13.5px;color:var(--azul);font-weight:600;word-break:break-all}
+  .campo{margin-bottom:18px}
+  button{
+    width:100%;padding:12px;background:var(--azul);color:#fff;border:0;
+    border-radius:7px;font-size:14.5px;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:.15s;
+  }
+  button:hover:not(:disabled){background:var(--azul-escuro)}
+  button:disabled{background:#9fb0c4;cursor:not-allowed}
+  .status{margin-top:18px;font-size:13.5px;line-height:1.55;display:none}
+  .status.on{display:block}
+  .status.ok{color:#0a6b3d;background:#e8f7ef;border:1px solid #b6e6cd;padding:12px 14px;border-radius:7px}
+  .status.erro{color:#8a1c1c;background:#fdecec;border:1px solid #f5c2c2;padding:12px 14px;border-radius:7px}
+  .status.info{color:#1e4b76;background:#eaf4fc;border:1px solid #c3e0f5;padding:12px 14px;border-radius:7px}
+  .barra{height:6px;background:#e4e9f0;border-radius:99px;overflow:hidden;margin-top:10px}
+  .barra i{display:block;height:100%;width:0;background:var(--verde);transition:width .25s}
+  footer{text-align:center;font-size:11.5px;color:#7a8794;padding:22px 16px 34px}
+  @media(max-width:520px){main{margin:20px auto}.card{padding:20px}}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="01_GPCS-06_Avatar_Positivo.png" alt="GPCS" onerror="this.style.display='none'">
+  <div>
+    <div class="t">Base de Conhecimento — Agente de Licitações</div>
+    <div class="s">GPCS · Prefeitura Municipal de Londrina-PR</div>
+  </div>
+</header>
+<div class="faixa">Upload de Documentos · Decreto 1462/2022 · Lei 14.133/2021</div>
+
+<main>
+  <div class="card">
+    <h1>Upload de Documentos — GPCS</h1>
+    <p class="sub">Envie decretos, leis ou manuais em PDF para a base de conhecimento do agente. O texto é extraído no seu próprio navegador e gravado na base de documentos.</p>
+
+    <div class="campo">
+      <label for="nome">Nome do Documento</label>
+      <input type="text" id="nome" placeholder="Ex: Decreto 1462/2022" autocomplete="off">
+    </div>
+
+    <label>Arquivo PDF</label>
+    <div class="drop" id="drop">
+      <div class="ic">📄</div>
+      <div class="txt" id="dropTxt">Clique para escolher ou arraste o PDF aqui</div>
+    </div>
+    <input type="file" id="arquivo" accept=".pdf,application/pdf" hidden>
+
+    <button id="btn">Enviar Documento</button>
+
+    <div class="status" id="status"></div>
+    <div class="barra" id="barraBox" style="display:none"><i id="barra"></i></div>
+  </div>
+</main>
+
+<footer>GPCS — Gerência de Planejamento e Compras em Saúde · DLMS</footer>
+
+<script>
+(function(){
+  var PROXY_URL  = 'https://gpcs-agent.americo-lucas.workers.dev';
+  var CHUNK_SIZE = 1500;
+  var OVERLAP    = 200;
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  var elNome   = document.getElementById('nome');
+  var elArq    = document.getElementById('arquivo');
+  var elDrop   = document.getElementById('drop');
+  var elDropTx = document.getElementById('dropTxt');
+  var elBtn    = document.getElementById('btn');
+  var elStatus = document.getElementById('status');
+  var elBarra  = document.getElementById('barra');
+  var elBarraB = document.getElementById('barraBox');
+
+  function msg(texto, tipo){
+    elStatus.className = 'status on ' + (tipo || 'info');
+    elStatus.textContent = texto;
+  }
+  function progresso(pct){
+    elBarraB.style.display = pct === null ? 'none' : 'block';
+    elBarra.style.width = (pct || 0) + '%';
+  }
+
+  elDrop.addEventListener('click', function(){ elArq.click(); });
+  elDrop.addEventListener('dragover', function(e){ e.preventDefault(); elDrop.classList.add('over'); });
+  elDrop.addEventListener('dragleave', function(){ elDrop.classList.remove('over'); });
+  elDrop.addEventListener('drop', function(e){
+    e.preventDefault(); elDrop.classList.remove('over');
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      elArq.files = e.dataTransfer.files;
+      mostrarArquivo();
+    }
+  });
+  elArq.addEventListener('change', mostrarArquivo);
+
+  function mostrarArquivo(){
+    var f = elArq.files[0];
+    if (!f) return;
+    elDropTx.className = 'nome';
+    elDropTx.textContent = f.name + ' · ' + (f.size/1024/1024).toFixed(2) + ' MB';
+    if (!elNome.value.trim()) {
+      elNome.value = f.name.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').trim();
+    }
+  }
+
+  // Extrai o texto de todas as páginas, juntando-as (equivale ao joinPages do n8n)
+  function extrairTexto(file){
+    return file.arrayBuffer().then(function(buf){
+      return pdfjsLib.getDocument({data: buf}).promise;
+    }).then(function(pdf){
+      var partes = [];
+      var seq = Promise.resolve();
+      for (var p = 1; p <= pdf.numPages; p++) {
+        (function(num){
+          seq = seq.then(function(){
+            return pdf.getPage(num).then(function(page){
+              return page.getTextContent();
+            }).then(function(tc){
+              partes.push(tc.items.map(function(i){ return i.str; }).join(' '));
+              msg('Extraindo texto… página ' + num + ' de ' + pdf.numPages, 'info');
+              progresso(Math.round(num / pdf.numPages * 45));
+            });
+          });
+        })(p);
+      }
+      return seq.then(function(){ return partes.join('\n\n'); });
+    });
+  }
+
+  // Mesmo algoritmo do nó "Dividir em Chunks" do n8n
+  function dividirEmChunks(texto){
+    var limpo = texto.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').trim();
+    if (!limpo) return [];
+    var chunks = [];
+    var inicio = 0;
+    while (inicio < limpo.length) {
+      var fim = Math.min(inicio + CHUNK_SIZE, limpo.length);
+      chunks.push(limpo.slice(inicio, fim));
+      inicio += CHUNK_SIZE - OVERLAP;
+    }
+    return chunks;
+  }
+
+  elBtn.addEventListener('click', function(){
+    var nome = elNome.value.trim();
+    var file = elArq.files[0];
+
+    if (!nome) { msg('Informe o nome do documento.', 'erro'); return; }
+    if (!file) { msg('Escolha um arquivo PDF.', 'erro'); return; }
+
+    elBtn.disabled = true;
+    msg('Lendo o PDF…', 'info');
+    progresso(2);
+
+    extrairTexto(file).then(function(texto){
+      var chunks = dividirEmChunks(texto);
+      if (!chunks.length) {
+        throw new Error('Não foi possível extrair texto deste PDF. Se ele for digitalizado (imagem), será preciso passar por OCR antes.');
+      }
+      msg('Texto extraído: ' + texto.length.toLocaleString('pt-BR') + ' caracteres em ' + chunks.length + ' blocos. Enviando…', 'info');
+      progresso(60);
+
+      return fetch(PROXY_URL + '/upload', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ nome_arquivo: nome, chunks: chunks })
+      }).then(function(res){
+        return res.json().then(function(data){
+          if (!res.ok || data.error) {
+            throw new Error(data.error || ('Falha ao gravar (HTTP ' + res.status + ')'));
+          }
+          return { data: data, total: chunks.length };
+        });
+      });
+    }).then(function(r){
+      progresso(100);
+      msg('Documento enviado e processado com sucesso! ' + (r.data.inseridos || r.total) +
+          ' blocos gravados na base do agente.', 'ok');
+      elArq.value = '';
+      elNome.value = '';
+      elDropTx.className = 'txt';
+      elDropTx.textContent = 'Clique para escolher ou arraste o PDF aqui';
+      setTimeout(function(){ progresso(null); }, 1800);
+    }).catch(function(e){
+      progresso(null);
+      msg('Erro: ' + e.message, 'erro');
+      console.error('Erro no upload:', e);
+    }).finally(function(){
+      elBtn.disabled = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
